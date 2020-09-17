@@ -1,11 +1,16 @@
+%global antlr_version 3.5.2
+%global c_runtime_version 3.4
+%global javascript_runtime_version 3.1
+%global baserelease 22
+
 Name:           antlr3
 Epoch:          1
-Version:        3.5.2
-Release:        21
+Version:        %{antlr_version}
+Release:        %{baserelease}
 Summary:        ANother Tool for Language Recognition
 License:        BSD
 URL:            http://www.antlr3.org/
-Source0:        https://github.com/antlr/antlr3/archive/%{version}.tar.gz
+Source0:        https://github.com/antlr/antlr3/archive/%{antlr_version}.tar.gz
 Source1:        http://www.antlr3.org/download/antlr-javascript-runtime-3.1.zip
 
 Patch0001:      0001-java8-fix.patch
@@ -27,9 +32,9 @@ of target languages.
 %package        tool
 Summary:        ANother Tool for Language Recognition
 BuildArch:      noarch
-Provides:       %{name} = %{epoch}:%{version}-%{release}  ant-%{name} = %{epoch}:%{version}-%{release}
-Obsoletes:      %{name} < %{epoch}:%{version}-%{release}  ant-%{name} < %{epoch}:%{version}-%{release}
-Requires:       %{name}-java = %{epoch}:%{version}-%{release}
+Provides:       %{name} = %{epoch}:%{antlr_version}-%{baserelease}  ant-%{name} = %{epoch}:%{antlr_version}-%{baserelease}
+Obsoletes:      %{name} < %{epoch}:%{antlr_version}-%{baserelease}  ant-%{name} < %{epoch}:%{antlr_version}-%{baserelease}
+Requires:       %{name}-java = %{epoch}:%{antlr_version}-%{baserelease}
 
 %description tool
 ANother Tool for Language Recognition, is a language tool that provides
@@ -39,7 +44,7 @@ of target languages.
 
 %package        java
 Summary:        Java run-time support for ANTLR-generated parsers
-Provides:       %{name}-java = %{epoch}:%{version}-%{release}
+Provides:       %{name}-java = %{epoch}:%{antlr_version}-%{baserelease}
 BuildArch:      noarch
 
 %description    java
@@ -48,15 +53,15 @@ Java run-time support for ANTLR-generated parsers
 %package        java-help
 Summary:        API documentation for antlr3
 BuildArch:      noarch
-Provides:       %{name}-javadoc = %{epoch}:%{version}-%{release}
-Obsoletes:      %{name}-javadoc < %{epoch}:%{version}-%{release}
+Provides:       %{name}-javadoc = %{epoch}:%{antlr_version}-%{baserelease}
+Obsoletes:      %{name}-javadoc < %{epoch}:%{antlr_version}-%{baserelease}
 
 %description java-help
 The antlr3-java-help package contains API documentation for antlr3.
 
 %package        javascript
-Version:        3.1
-Release:        3.5.2.21
+Version:        %{javascript_runtime_version}
+Release:        %{antlr_version}.%{baserelease}%{?dist}
 Summary:        Javascript run-time support for ANTLR-generated parsers
 BuildArch:      noarch
 
@@ -64,32 +69,32 @@ BuildArch:      noarch
 Javascript run-time support for ANTLR-generated parsers
 
 %package        C
-Version:        3.4
-Release:        3.5.2.21
+Version:        %{c_runtime_version}
+Release:        %{antlr_version}.%{baserelease}%{?dist}
 Summary:        C run-time support for ANTLR-generated parsers
 
 %description    C
 C run-time support for ANTLR-generated parsers
 
 %package        C-devel
-Version:        3.4
-Release:        3.5.2.21
+Version:        %{c_runtime_version}
+Release:        %{antlr_version}.%{baserelease}%{?dist}
 Summary:        Header files for the C bindings for ANTLR-generated parsers
-Requires:       %{name}-C = %{epoch}:3.4-3.5.2.21
+Requires:       %{name}-C = %{epoch}:%{c_runtime_version}-%{release}
 
 %description    C-devel
 Header files for the C bindings for ANTLR-generated parsers
 
 %package        C-help
-Version:        3.4
-Release:        3.5.2.21
+Version:        %{c_runtime_version}
+Release:        %{antlr_version}.%{baserelease}%{?dist}
 Summary:        API documentation for the C run-time support for ANTLR-generated parsers
 BuildArch:      noarch
 BuildRequires:  graphviz doxygen
-Requires:       %{name}-C = %{epoch}:3.4-3.5.2.21
+Requires:       %{name}-C = %{epoch}:%{c_runtime_version}-%{release}
 
-Provides:       %{name}-C-docs = %{epoch}:3.4-3.5.2.21
-Obsoletes:      %{name}-C-docs < %{epoch}:3.4-3.5.2.21
+Provides:       %{name}-C-docs = %{epoch}:%{c_runtime_version}-%{release}
+Obsoletes:      %{name}-C-docs < %{epoch}:%{c_runtime_version}-%{release}
 
 %description    C-help
 This package contains doxygen documentation with instruction on how to
@@ -103,7 +108,7 @@ Summary:        C++ runtime support for ANTLR-generated parsers
 C++ runtime support for ANTLR-generated parsers.
 
 %prep
-%setup -q -n antlr3-3.5.2 -a 1
+%setup -q -n antlr3-%{antlr_version} -a 1
 sed -i "s,\${buildNumber},`cat %{_sysconfdir}/openEuler-release` `date`," \
     tool/src/main/resources/org/antlr/antlr.properties
 %patch0001 -p1
@@ -218,6 +223,10 @@ install -pm 644 runtime/Cpp/include/* $RPM_BUILD_ROOT/%{_includedir}/
 
 
 %changelog
+* Thu Sep 17 2020 chengzihan <chengzihan2@huawei.com> - 1:3.5.2-22
+- Exchange all numbers of version and release to macros,
+- to resolve installing problem.
+
 * Sat Dec 21 2019 sunguoshuai<sunguoshuai@huawei.com> - 1:3.5.2-21
 - Use version and release macro.
 
