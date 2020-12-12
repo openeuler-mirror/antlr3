@@ -1,7 +1,7 @@
 %global antlr_version 3.5.2
 %global c_runtime_version 3.4
 %global javascript_runtime_version 3.1
-%global baserelease 22
+%global baserelease 23
 
 Name:           antlr3
 Epoch:          1
@@ -61,7 +61,7 @@ The antlr3-java-help package contains API documentation for antlr3.
 
 %package        javascript
 Version:        %{javascript_runtime_version}
-Release:        %{antlr_version}.%{baserelease}%{?dist}
+Release:        %{antlr_version}.%{baserelease}
 Summary:        Javascript run-time support for ANTLR-generated parsers
 BuildArch:      noarch
 
@@ -70,7 +70,7 @@ Javascript run-time support for ANTLR-generated parsers
 
 %package        C
 Version:        %{c_runtime_version}
-Release:        %{antlr_version}.%{baserelease}%{?dist}
+Release:        %{antlr_version}.%{baserelease}
 Summary:        C run-time support for ANTLR-generated parsers
 
 %description    C
@@ -78,7 +78,7 @@ C run-time support for ANTLR-generated parsers
 
 %package        C-devel
 Version:        %{c_runtime_version}
-Release:        %{antlr_version}.%{baserelease}%{?dist}
+Release:        %{antlr_version}.%{baserelease}
 Summary:        Header files for the C bindings for ANTLR-generated parsers
 Requires:       %{name}-C = %{epoch}:%{c_runtime_version}-%{release}
 
@@ -87,7 +87,7 @@ Header files for the C bindings for ANTLR-generated parsers
 
 %package        C-help
 Version:        %{c_runtime_version}
-Release:        %{antlr_version}.%{baserelease}%{?dist}
+Release:        %{antlr_version}.%{baserelease}
 Summary:        API documentation for the C run-time support for ANTLR-generated parsers
 BuildArch:      noarch
 BuildRequires:  graphviz doxygen
@@ -223,6 +223,9 @@ install -pm 644 runtime/Cpp/include/* $RPM_BUILD_ROOT/%{_includedir}/
 
 
 %changelog
+* Sat Dec 12 2020 wutao <wutao61@huawei.com> - 1:3.5.2-23
+- fix rpm dist problem
+
 * Thu Sep 17 2020 chengzihan <chengzihan2@huawei.com> - 1:3.5.2-22
 - Exchange all numbers of version and release to macros,
 - to resolve installing problem.
